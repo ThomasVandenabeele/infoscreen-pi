@@ -53,7 +53,7 @@ namespace InfoScreenPi
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Screen}/{action=Index}/{id?}");
             });
         }
     }
