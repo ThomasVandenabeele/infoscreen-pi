@@ -1,3 +1,6 @@
+@using InfoScreenPi.Models
+@model IEnumerable<User>
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -99,11 +102,12 @@
         </ul>
     </div>
     <div class="col-md-3">
-        <h2>Run & Deploy</h2>
+        <h2>Users</h2>
         <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
+            @foreach (User persoon in Model)
+            {
+                <li>@persoon.Username - @persoon.Password</li>
+            }
         </ul>
     </div>
 </div>

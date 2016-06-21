@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using InfoScreenPi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace InfoScreenPi
 {
@@ -29,6 +31,10 @@ namespace InfoScreenPi
         {
             // Add framework services.
             services.AddMvc();
+
+            //var connection = @"Data Source=/Users/Thomas/aspnet/InfoScreenPi/bin/Debug/netcoreapp1.0/InfoScreenDB.db;Version=3;";
+            var connection = @"Data Source=./InfoScreenDB.db;Version=3;";
+            services.AddDbContext<InfoScreenContext>(options => options.UseSqlite(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
