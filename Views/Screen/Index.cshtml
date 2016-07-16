@@ -1,6 +1,11 @@
+@using InfoScreenPi.Models
+@using InfoScreenPi.ViewModels
+@model IEnumerable<ItemViewModel>
 @{
     Layout = null;
+    int index = 0;
  }
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,29 +42,28 @@
 
         <!-- Wrapper for Slides -->
         <div class="carousel-inner">
-            <div class="item active">
-                <!-- Set the first background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('http://s3.hbvlcdn.be/Assets/Images_Upload/2016/06/18/9061fe5a-356a-11e6-8c71-173369986151_web_scale_0.0607639_0.0607639__.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2>Sint-Truiden trotseert gietende regen voor Rode Duivels</h2>
-                    <p>In Sint-Truiden werd het een feestje om niet snel te vergeten. Ondanks de gietende regen zakten de fans massaal af om samen de overwinning van de Rode Duivels te vieren.</p>
-                </div>
-            </div>
-            <div class="item">
-                <!-- Set the second background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('http://s2.hbvlcdn.be/Assets/Images_Upload/2016/06/06/679007aa-2bf2-11e6-b258-6c1f3fcea998_web_scale_0.0774851_0.0774851__.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2>Test</h2>
-                </div>
-            </div>
-            <div class="item">
-                <!-- Set the second background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('http://s4.hbvlcdn.be/Assets/Images_Upload/2016/06/18/c3299c8c-3559-11e6-8c71-173369986151_web_scale_0.3431373_0.3431373__.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2>Zien jullie de tientallen schapen in deze wei?</h2>
-                    <p>Elke dag gaat de Canadese boerin Liezel Kennedy de natuur in om haar tientallen schapen te laten grazen. Maar op een besneeuwde ochtend raakte Liezel plots in paniek. Uit het niets leken al haar schapen verdwenen.</p>
-                </div>
-            </div>
+
+            @foreach(ItemViewModel item in Model){
+                if(index == 0){
+                    <div class="item active">
+                        <div class="fill" style="background-image:url('@item.BackgroundUrl')"></div>
+                        <div class="carousel-caption">
+                            <h2>@item.Title</h2>
+                            @Html.Raw(item.Content)
+                        </div>
+                    </div>
+                }
+                else{
+                    <div class="item">
+                        <div class="fill" style="background-image:url('@item.BackgroundUrl')"></div>
+                        <div class="carousel-caption">
+                            <h2>@item.Title</h2>
+                            @Html.Raw(item.Content)
+                        </div>
+                    </div>
+                }
+                index++;
+            }
         </div>
 
     </header>
@@ -130,8 +134,6 @@
 	});
 
     </script>
-
-
 
 </body>
 

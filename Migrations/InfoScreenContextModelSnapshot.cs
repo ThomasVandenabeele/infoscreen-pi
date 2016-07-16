@@ -15,12 +15,28 @@ namespace InfoScreenPi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20896");
 
+            modelBuilder.Entity("InfoScreenPi.Models.Background", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Backgrounds");
+                });
+
             modelBuilder.Entity("InfoScreenPi.Models.Item", b =>
                 {
                     b.Property<int>("ItemId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Background");
+                    b.Property<bool>("Active");
+
+                    b.Property<bool>("Archieved");
+
+                    b.Property<int?>("BackgroundId");
 
                     b.Property<string>("Content");
 
@@ -29,6 +45,8 @@ namespace InfoScreenPi.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("BackgroundId");
 
                     b.HasIndex("SoortId");
 
@@ -42,6 +60,8 @@ namespace InfoScreenPi.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Source");
+
                     b.HasKey("Id");
 
                     b.ToTable("ItemKinds");
@@ -51,6 +71,8 @@ namespace InfoScreenPi.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("LastLogin");
 
                     b.Property<string>("Password");
 
@@ -63,6 +85,10 @@ namespace InfoScreenPi.Migrations
 
             modelBuilder.Entity("InfoScreenPi.Models.Item", b =>
                 {
+                    b.HasOne("InfoScreenPi.Models.Background")
+                        .WithMany()
+                        .HasForeignKey("BackgroundId");
+
                     b.HasOne("InfoScreenPi.Models.ItemKind")
                         .WithMany()
                         .HasForeignKey("SoortId");
