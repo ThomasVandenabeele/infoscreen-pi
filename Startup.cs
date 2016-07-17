@@ -31,6 +31,7 @@ namespace InfoScreenPi
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSession(/* options go here */);
 
             //var connection = @"Data Source=/Users/Thomas/aspnet/InfoScreenPi/bin/Debug/netcoreapp1.0/InfoScreenDB.db;Version=3;";
             var connection = @"Data Source=./InfoScreenDB.db;Version=3;";
@@ -40,6 +41,8 @@ namespace InfoScreenPi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseSession();
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

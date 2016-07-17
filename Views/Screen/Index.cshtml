@@ -25,6 +25,7 @@
 
     <!-- Custom CSS -->
     <link href="~/css/full-slider.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,26 +44,38 @@
         <!-- Wrapper for Slides -->
         <div class="carousel-inner">
 
-            @foreach(ItemViewModel item in Model){
-                if(index == 0){
-                    <div class="item active">
-                        <div class="fill" style="background-image:url('@item.BackgroundUrl')"></div>
-                        <div class="carousel-caption">
-                            <h2>@item.Title</h2>
-                            @Html.Raw(item.Content)
+            @{
+                foreach(ItemViewModel item in Model){
+                    if(index == 0){
+                        <div class="item active">
+                            <div class="fill" style="background-image:url('@item.BackgroundUrl')"></div>
+                            <div class="carousel-caption">
+                                <h2>@item.Title</h2>
+                                @Html.Raw(item.Content)
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else{
+                        if(item.KindDescription == "CUSTOM"){
+                            <div class="item">
+                                <div class="fill" style="background-image:url('@item.BackgroundUrl')"></div>
+                                <div class="carousel-caption customlayout">
+                                    @Html.Raw(item.Content)
+                                </div>
+                            </div>
+                        }
+                        else{
+                            <div class="item">
+                                <div class="fill" style="background-image:url('@item.BackgroundUrl')"></div>
+                                <div class="carousel-caption">
+                                    <h2>@item.Title</h2>
+                                    @Html.Raw(item.Content)
+                                </div>
+                            </div>
+                        }
+                    }
+                    index++;
                 }
-                else{
-                    <div class="item">
-                        <div class="fill" style="background-image:url('@item.BackgroundUrl')"></div>
-                        <div class="carousel-caption">
-                            <h2>@item.Title</h2>
-                            @Html.Raw(item.Content)
-                        </div>
-                    </div>
-                }
-                index++;
             }
         </div>
 
@@ -75,10 +88,9 @@
     		</div>
 	    	<div class="col-md-11" id="foot_content">
 	    		<ul class="ticker">
-		        	<li>Dokterspraktijk Vandenabeele-Craenen</li>
-		            <li>Welkom in onze dokterspraktijk</li>
-		            <li>Woensdag namiddag & zaterdag voormiddag op afspraak</li>
-		            <li>Registreeer je afspraak op onze website</li>
+                    @foreach (string dataLine in TempData["TickerData"] as List<string>) {
+                        <li>@dataLine</li>
+                    }
 		        </ul>
 			</div>
 	    </div>
