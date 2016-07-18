@@ -1,5 +1,5 @@
 using System;
-using InfoScreenPi.Models;
+using InfoScreenPi.Entities;
 
 namespace InfoScreenPi.ViewModels
 {
@@ -16,7 +16,7 @@ namespace InfoScreenPi.ViewModels
 
         public ItemViewModel(Item i)
         {
-            Id = i.ItemId;
+            Id = i.Id;
             KindDescription = i.Soort.Description;
             KindSource = i.Soort.Source;
             Title = i.Title;

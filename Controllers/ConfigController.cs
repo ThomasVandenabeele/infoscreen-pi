@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using InfoScreenPi.Models;
+using InfoScreenPi.Entities;
+using InfoScreenPi.Infrastructure;
+
 namespace InfoScreenPi.Controllers
 {
     public class ConfigController : Controller

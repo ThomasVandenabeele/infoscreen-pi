@@ -8,9 +8,10 @@ using InfoScreenPi.Infrastructure;
 namespace InfoScreenPi.Migrations
 {
     [DbContext(typeof(InfoScreenContext))]
-    partial class InfoScreenContextModelSnapshot : ModelSnapshot
+    [Migration("20160718172530_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
