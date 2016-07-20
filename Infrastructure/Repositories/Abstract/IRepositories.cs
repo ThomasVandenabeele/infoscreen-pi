@@ -16,6 +16,8 @@ namespace InfoScreenPi.Infrastructure.Repositories
 
     public interface IRoleRepository : IEntityBaseRepository<Role> { }
 
+    public interface IRssFeedRepository : IEntityBaseRepository<RssFeed> { }
+
     public interface IUserRepository : IEntityBaseRepository<User>
     {
         User GetSingleByUsername(string username);

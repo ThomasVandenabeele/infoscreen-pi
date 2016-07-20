@@ -8,7 +8,7 @@ using InfoScreenPi.Infrastructure;
 namespace InfoScreenPi.Migrations
 {
     [DbContext(typeof(InfoScreenContext))]
-    [Migration("20160718172530_initial")]
+    [Migration("20160720114218_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,8 @@ namespace InfoScreenPi.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<int?>("RssFeedId");
+
                     b.Property<int?>("SoortId");
 
                     b.Property<string>("Title");
@@ -64,6 +66,8 @@ namespace InfoScreenPi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BackgroundId");
+
+                    b.HasIndex("RssFeedId");
 
                     b.HasIndex("SoortId");
 
@@ -98,6 +102,20 @@ namespace InfoScreenPi.Migrations
                     b.ToTable("Role");
                 });
 
+            modelBuilder.Entity("InfoScreenPi.Entities.RssFeed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RssFeed");
+                });
+
             modelBuilder.Entity("InfoScreenPi.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -109,6 +127,8 @@ namespace InfoScreenPi.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 200);
 
+                    b.Property<string>("FirstName");
+
                     b.Property<string>("HashedPassword")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 200);
@@ -116,6 +136,8 @@ namespace InfoScreenPi.Migrations
                     b.Property<bool>("IsLocked");
 
                     b.Property<DateTime>("LastLogin");
+
+                    b.Property<string>("LastName");
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -153,6 +175,10 @@ namespace InfoScreenPi.Migrations
                     b.HasOne("InfoScreenPi.Entities.Background", "Background")
                         .WithMany()
                         .HasForeignKey("BackgroundId");
+
+                    b.HasOne("InfoScreenPi.Entities.RssFeed", "RssFeed")
+                        .WithMany()
+                        .HasForeignKey("RssFeedId");
 
                     b.HasOne("InfoScreenPi.Entities.ItemKind", "Soort")
                         .WithMany()

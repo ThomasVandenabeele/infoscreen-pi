@@ -64,6 +64,20 @@ namespace InfoScreenPi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RssFeed",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Description = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RssFeed", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -71,9 +85,11 @@ namespace InfoScreenPi.Migrations
                         .Annotation("Autoincrement", true),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(maxLength: 200, nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
                     HashedPassword = table.Column<string>(maxLength: 200, nullable: false),
                     IsLocked = table.Column<bool>(nullable: false),
                     LastLogin = table.Column<DateTime>(nullable: false),
+                    LastName = table.Column<string>(nullable: true),
                     Salt = table.Column<string>(maxLength: 200, nullable: false),
                     Username = table.Column<string>(maxLength: 100, nullable: false)
                 },
@@ -92,6 +108,7 @@ namespace InfoScreenPi.Migrations
                     Archieved = table.Column<bool>(nullable: false),
                     BackgroundId = table.Column<int>(nullable: true),
                     Content = table.Column<string>(nullable: true),
+                    RssFeedId = table.Column<int>(nullable: true),
                     SoortId = table.Column<int>(nullable: true),
                     Title = table.Column<string>(nullable: true)
                 },
@@ -102,6 +119,12 @@ namespace InfoScreenPi.Migrations
                         name: "FK_Item_Background_BackgroundId",
                         column: x => x.BackgroundId,
                         principalTable: "Background",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Item_RssFeed_RssFeedId",
+                        column: x => x.RssFeedId,
+                        principalTable: "RssFeed",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -144,6 +167,11 @@ namespace InfoScreenPi.Migrations
                 column: "BackgroundId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Item_RssFeedId",
+                table: "Item",
+                column: "RssFeedId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Item_SoortId",
                 table: "Item",
                 column: "SoortId");
@@ -172,6 +200,9 @@ namespace InfoScreenPi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Background");
+
+            migrationBuilder.DropTable(
+                name: "RssFeed");
 
             migrationBuilder.DropTable(
                 name: "ItemKind");

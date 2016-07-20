@@ -5,16 +5,182 @@
     ViewData["Title"] = "Configuratie";
 }
 
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.3.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"></script>
+<style>
+  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+  .toggle.ios .toggle-handle { border-radius: 20px; }
+</style>
+
+<hr/>
+@**************************** ACTIVE ITEMS ****************************@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>
+            Items
+            <div class="btn-group pull-right" role="group" aria-label="...">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp;&nbsp;&nbsp;Archief</button>
+                <button type="button" id="nieuw" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp;Nieuw</button>
+            </div>
+        </h2>
+    </div>@*
+    <div class="panel-body">
+        <p>...</p>
+    </div>*@
+    <table class="table table-striped">
+        <tr>
+            <th style="display:none;">Id</th>
+            <th width="10px"></th>
+            <th>Titel</th> 
+            <th width="100px">Achtergrond</th>
+            <th>Inhoud</th>
+            <th width="50px">Actief</th>
+            <th width="5px"></th>
+        </tr>
+        @{
+            int index = 1;
+            foreach(Item i in ViewBag.ActiveItems as List<Item>)
+            {
+                <tr>
+                    <td style="display:none;">@i.Id</td>
+                    <td>@index</td>
+                    <td><b>@i.Title</b></td>
+                    <td><a href="@i.Background.Url" target="new" ><img src="@i.Background.Url" width="100px" /></a></td>
+                    <td>@Html.Raw(i.Content)</td>
+                    <td>
+                        @if(i.Active){
+                            <input type="checkbox" id="stateCheck" checked data-toggle="toggle" data-style="ios" data-size="mini" data-on="Actief" data-off="Inactief"data-onstyle="success" data-offstyle="danger">
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="stateCheck" data-toggle="toggle" data-style="ios" data-size="mini" data-on="Actief" data-off="Inactief"data-onstyle="success" data-offstyle="danger">
+                        }
+                    </td>
+                    <td><span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span></td>
+                </tr>
+                index++;
+            }
+        }
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // put all your jQuery goodness in here.
+
+        $('#stateCheck').change(function() {
+            
+            var stateBool =  Boolean($(this).is(":checked"));
+            console.log(stateBool);
+
+            var itemId = parseInt((($(this).closest("tr").children("td"))[0]).innerHTML);
+            console.log(itemId);
+
+            var postData = { id: itemId, state: stateBool };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ChangeItemState", "Config")',
+                data: postData,
+                success: function(response, textStatus, jqXHR){
+                    console.log(response);
+                    if(response.success){
+                        alertify.success(response.message);
+                    }
+                    else{
+                        alertify.error(response.message);
+                    }
+                },
+                dataType: "json",
+                traditional: true
+            });
+
+        });
+
+        $( "#nieuw" ).click(function() {
+        alertify.confirm("Message", function (e) {
+            if (e) {
+                // success notification
+                // shorthand for alertify.log("Notification", "success");
+                alertify.success("Success notification");
+            } else {
+                // user clicked "cancel"
+            }
+        });
+    });
+
+    });
+    
+</script>
+
+<hr/>
+@**************************** TICKER ITEMS ****************************@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>
+            Ticker Items
+        </h2>
+    </div>
+    <div class="panel-body">
+        <p>
+            Pas de inhoud aan door iedere rij aan te passen. Voeg een nieuwe rij toe voor extra infoveld.<br>
+            Na wijzigingen op opslaan drukken!
+        </p>
+        <textarea class="form-control" id="TickerData" rows="5">
+            @foreach (string dataLine in ViewBag.TickerItems as List<string>) {
+                @Html.Raw(dataLine + "\n")
+            }
+        </textarea> <br>  
+        <button type="button" id="TickerOpslaan" class="btn btn-primary">Opslaan</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        $( "#TickerOpslaan" ).click(function() {
+            var stringArray2 = $('#TickerData').val().split('\n');
+            var postData = { listkey: stringArray2 };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SaveTicker", "Config")',
+                data: postData,
+                success: function(response, textStatus, jqXHR){
+                    console.log(response);
+                    if(response.success){
+                        alertify.success(response.message);
+                    }
+                    else{
+                        alertify.error(response.message);
+                    }
+                },
+                dataType: "json",
+                traditional: true
+            });
+
+        });
+
+    });
+    
+</script>
+
+<hr/>
+@**************************** CREATE ITEMS ****************************@
+<h1>
+    Create Slide
+</h1>
 <form>
-            <textarea name="editor1" id="editor1" rows="10" cols="80">
-                This is my textarea to be replaced with CKEditor.
-            </textarea>
-            <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-                CKEDITOR.replace( 'editor1' , {
-                    language: 'nl'
-                });
-            </script>
-        </form>
+    <textarea name="editor1" id="editor1" rows="10" cols="80">
+        This is my textarea to be replaced with CKEditor.
+    </textarea>
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace( 'editor1' , {
+            language: 'nl'
+        });
+    </script>
+</form>
 

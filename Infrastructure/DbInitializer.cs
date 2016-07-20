@@ -24,6 +24,14 @@ namespace InfoScreenPi.Infrastructure
         {
             if (!context.Items.Any())
             {
+
+                var _rssFeed1 = context.RssFeeds.Add(
+                    new RssFeed
+                    {
+                        Title = "Het Belang van Limburg : Limburg",
+                        Description = "Het Belang van Limburg : Provincie Limburg"
+                    }
+                ).Entity;
                 
                 var _itemKind1 = context.ItemKinds.Add(
                     new ItemKind
@@ -66,6 +74,7 @@ namespace InfoScreenPi.Infrastructure
                     new Item
                     {
                         Soort = _itemKind1,
+                        RssFeed = _rssFeed1,
         	            Title = "Sint-Truiden trotseert gietende regen voor Rode Duivels",
         	            Content = "<p>In Sint-Truiden werd het een feestje om niet snel te vergeten. Ondanks de gietende regen zakten de fans massaal af om samen de overwinning van de Rode Duivels te vieren.</p>",
         	            Background = _background1,
@@ -78,7 +87,7 @@ namespace InfoScreenPi.Infrastructure
                     new Item
                     {
                         Soort = _itemKind2,
-                        Title = "",
+                        Title = "Test item",
                         Content = "<center><h2><u>TEST</u> TEST</h2></center>",
                         Background = _background2,
                         Active = true,
@@ -112,6 +121,8 @@ namespace InfoScreenPi.Infrastructure
                 {
                     Email = "thomasvda@gmail.com",
                     Username = "TVDA",
+                    FirstName = "Thomas",
+                    LastName = "Vandenabeele",
                     HashedPassword = "9wsmLgYM5Gu4zA/BSpxK2GIBEWzqMPKs8wl2WDBzH/4=",
                     Salt = "GTtKxJA6xJuj3ifJtTXn9Q==",
                     IsLocked = false,

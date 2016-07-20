@@ -1,4 +1,7 @@
-
+body{
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -10,7 +13,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;*/
 }
 
 /* Carousel */

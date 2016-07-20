@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace InfoScreenPi
 {
@@ -86,6 +87,9 @@ namespace InfoScreenPi
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                AuthenticationScheme = "MyCookieMiddlewareInstance",
+                LoginPath = new PathString("/Config/Login"),
+                //AccessDeniedPath = new PathString("/Config/Login"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true
             });

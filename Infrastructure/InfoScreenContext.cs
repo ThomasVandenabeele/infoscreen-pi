@@ -11,6 +11,7 @@ namespace InfoScreenPi.Infrastructure
     {
         public DbSet<Item> Items { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<RssFeed> RssFeeds { get; set; }
         public DbSet<Background> Backgrounds { get; set; }
         public DbSet<ItemKind> ItemKinds { get; set; }
         public DbSet<Role> Roles { get; set; }

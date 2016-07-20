@@ -6,6 +6,7 @@ namespace InfoScreenPi.Entities
     {
         public int Id { get; set; }
         public ItemKind Soort { get; set; }
+        public RssFeed RssFeed { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public Background Background { get; set; }

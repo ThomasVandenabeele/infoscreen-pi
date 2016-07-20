@@ -86,6 +86,7 @@ namespace InfoScreenPi.Infrastructure.Services
             return _userRepository.GetSingle(userId);
         }
 
+
         public List<Role> GetUserRoles(string username)
         {
             List<Role> _result = new List<Role>();
