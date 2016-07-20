@@ -3,6 +3,11 @@
 @if(Model != null)
 {
     <form class="navbar-form form-inline"> @* Form gebruiken om het te aligneren met de navbar *@
+        <div class="btn-group btn-group-xs">
+            <button type="button" class="btn btn-default" style="margin-top:6px;">
+                <i class="glyphicon glyphicon-refresh"> </i> &nbsp;&nbsp; Refresh Screen
+            </button>
+        </div>
         <div class="btn-group pull-right">
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="glyphicon glyphicon-user"> </i> &nbsp;&nbsp; @Model.FirstName @Model.LastName <span class="caret"></span>

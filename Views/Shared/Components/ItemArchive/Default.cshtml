@@ -1,0 +1,28 @@
+@using InfoScreenPi.Entities
+@model List<Item>
+
+<table class="table table-striped">
+        <tr>
+            <th style="display:none;">Id</th>
+            <th width="10px"></th>
+            <th>Titel</th> 
+            <th width="100px">Achtergrond</th>
+            <th>Inhoud</th>
+            <th width="5px"></th>
+        </tr>
+        @{
+            int index = 1;
+            foreach(Item i in Model)
+            {
+                <tr>
+                    <td style="display:none;">@i.Id</td>
+                    <td>@index</td>
+                    <td><b>@i.Title</b></td>
+                    <td><a href="@i.Background.Url" target="new" ><img src="@i.Background.Url" width="100px" /></a></td>
+                    <td>@Html.Raw(i.Content)</td>
+                    <td><span class="glyphicon glyphicon glyphicon-trash verwijder" aria-hidden="true" style="cursor: pointer;"></span></td>
+                </tr>
+                index++;
+            }
+        }
+</table>

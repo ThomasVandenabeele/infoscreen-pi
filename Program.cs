@@ -14,6 +14,7 @@ namespace InfoScreenPi
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://localhost:3336", "http://localhost:3337")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();

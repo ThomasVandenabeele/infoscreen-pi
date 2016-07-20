@@ -45,8 +45,7 @@ namespace InfoScreenPi.Controllers
         public IActionResult Index()
         {
             if(HttpContext.Session.GetString("Username") != null) ViewBag.Username = HttpContext.Session.GetString("Username");
-
-            ViewBag.ActiveItems = (List<Item>) _itemRepository.AllIncluding(a => a.Background, a => a.Soort).Where(i => i.Soort.Description != "RSS").ToList();
+            ViewBag.ActiveItems = (List<Item>) _itemRepository.AllIncluding(a => a.Background, a => a.Soort).Where(i => i.Soort.Description != "RSS" && i.Archieved == false).ToList();
             ViewBag.TickerItems = new List<string>(System.IO.File.ReadAllLines(_hostEnvironment.WebRootPath + "/data/ticker.txt")); 
             return View(_context.Users.ToList());
         }
@@ -81,7 +80,7 @@ namespace InfoScreenPi.Controllers
 
                     await HttpContext.Authentication.SignInAsync("MyCookieMiddlewareInstance",
                         new ClaimsPrincipal(new ClaimsIdentity(_claims, CookieAuthenticationDefaults.AuthenticationScheme)),
-                        new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties {IsPersistent = user.RememberMe });
+                        new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties {IsPersistent = false });
 
 
                     _authenticationResult = new GenericResult()
@@ -170,8 +169,6 @@ namespace InfoScreenPi.Controllers
         [HttpPost]
         public ActionResult ChangeItemState(int id, bool state)
         {
-            string bericht = state? "Item status verandert naar actief!" : "Item status verandert naar inactief!";
-
             Item item = _itemRepository.GetSingle(id);
             if (item != null)
             {
@@ -182,6 +179,35 @@ namespace InfoScreenPi.Controllers
             }
 
             return Json(new {success = false, message = "Update is niet gelukt!"});
+        }
+
+        [HttpPost]
+        public ActionResult ArchiveItem(int id, bool state)
+        {
+            Item item = _itemRepository.GetSingle(id);
+            if (item != null)
+            {
+                item.Archieved = state;
+                _itemRepository.Edit(item);
+                _itemRepository.Commit();
+                return Json(new {success = true, message = (state? "Item verwijderd" : "Item terug geactiveerd")});    
+            }
+
+            return Json(new {success = false, message = "Archieveren is niet gelukt!"});
+        }
+
+        [HttpGet]
+        public ActionResult ItemsArchive()
+        {
+            List<Item> model = _itemRepository.AllIncluding(a => a.Background, a => a.Soort).Where(i => i.Soort.Description != "RSS" && i.Archieved == true).ToList();
+            return PartialView(model);
+        }
+
+        [HttpGet]
+        public ActionResult ItemsTable()
+        {
+            List<Item> model = _itemRepository.AllIncluding(a => a.Background, a => a.Soort).Where(i => i.Soort.Description != "RSS" && i.Archieved == false).ToList();
+            return PartialView(model);
         }
 
     }

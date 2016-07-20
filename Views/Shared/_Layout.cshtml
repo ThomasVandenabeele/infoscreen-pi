@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="~/lib/alertify.js/themes/alertify.core.css" />
     <!-- include a theme, can be included into the core instead of 2 separate files -->
     <link rel="stylesheet" href="~/lib/alertify.js/themes/alertify.bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap3-dialog/src/css/bootstrap-dialog.css" />
 </head>
 <body style="padding-top: 50px; padding-bottom: 20px;">
     <div class="navbar navbar-default navbar-fixed-top">
@@ -35,11 +36,12 @@
                 <a asp-controller="Home" asp-action="Index" class="navbar-brand"> <b>Huisartsenpraktijk Vandenabeele-Craenen</b></a>
             </div>
             <div class="navbar-collapse collapse">
+                @*
                 <ul class="nav navbar-nav">
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-controller="Home" asp-action="About">About</a></li>
                 </ul>
-
+                *@
                 @await Component.InvokeAsync("AccountMenu")
 
             </div>
@@ -61,9 +63,11 @@
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        
     <script src="~/lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
     <script src="~/lib/alertify.js/lib/alertify.min.js"></script>
+    <script src="~/lib/bootstrap3-dialog/src/js/bootstrap-dialog.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     
     @RenderSection("scripts", required: false)
 </body>
